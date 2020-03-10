@@ -1,0 +1,89 @@
+<html>
+	<head>
+		<title> User List</title>
+	</head>
+
+	<body>
+	
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-lg-1">User id</div>
+				<div class="col-lg-1">First Name</div>
+				<div class="col-lg-1">Last Name</div>
+				<div class="col-lg-1">Middle Name</div>
+				<div class="col-lg-1">Phone Number</div>
+				<div class="col-lg-2">email address</div>
+				<div class="col-lg-1">Sex</div>
+				<div class="col-lg-1">type of user</div>
+				<div class="col-lg-2"> Actions</div>
+			</div>
+			
+			<div class="userInfo">
+			</div>
+		</div>
+		
+		
+	</body>
+	
+	<script src="/js/jquery-3.3.1.min.js"></script>
+	<script src="/js/bootstrap.bundle.js"></script>
+	
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	
+	
+	<script >
+
+		jQuery(document).ready(function(){
+		
+			getUser();
+		
+			jQuery(".userInfo").on("click",".delete",function(){
+				var userId=jQuery(this).attr("userId");
+				deleteUser(userId)
+			});
+		});
+		
+
+		function deleteUser(userId){
+			
+			jQuery.ajax({
+				method : "DELETE",
+				url:"/user/"+userId
+			}).done(function(data){
+				getUser();
+			});
+			
+		}
+		function getUser(){
+			jQuery.ajax({
+				method : "GET",
+				url:"/user"
+			}).done(function(data){
+				loadUserData(data)
+			});
+			
+		}
+		
+		function loadUserData(data){
+			var userData = ''
+			data.forEach(function(user){
+				userData += '<div class="row">'
+				userData += '<div class="col-lg-1">'+user.loginName+'</div>'
+				userData += '<div class="col-lg-1">'+user.firstName+'</div>'
+				userData += '<div class="col-lg-1">'+user.lastName+'</div>'
+				userData += '<div class="col-lg-1">'+user.middleName+'</div>'
+				userData += '<div class="col-lg-1">'+user.phoneNumber+'</div>'
+				userData += '<div class="col-lg-2">'+user.emailAddress+'</div>'
+				userData += '<div class="col-lg-1">'+user.sex+'</div>'
+				userData += '<div class="col-lg-1">'+user.typeOfUser+'</div>'
+				userData += '<div class="col-lg-2">'; 
+				userData += '<button type="button" class="update btn btn-primary" userId="'+user.id +'">Update</button>'
+				userData += '<button type="button" class="delete btn btn-danger" userId="'+user.id +'">Delete</button></div>'
+				userData += '</div>'
+			})
+			
+			jQuery(".userInfo").html(userData)
+			
+		}
+	</script>
+</html>

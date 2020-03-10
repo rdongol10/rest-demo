@@ -19,8 +19,8 @@ public class User {
 	private String middleName;
 	private String phoneNumber;
 	private String emailAddress;
-	private int sex;
-	private int typeOfUser;
+	private String sex;
+	private String typeOfUser;
 
 	public long getId() {
 		return id;
@@ -86,19 +86,19 @@ public class User {
 		this.emailAddress = emailAddress;
 	}
 
-	public int getSex() {
+	public String getSex() {
 		return sex;
 	}
 
-	public void setSex(int sex) {
+	public void setSex(String sex) {
 		this.sex = sex;
 	}
 
-	public int getTypeOfUser() {
+	public String getTypeOfUser() {
 		return typeOfUser;
 	}
 
-	public void setTypeOfUser(int typeOfUser) {
+	public void setTypeOfUser(String typeOfUser) {
 		this.typeOfUser = typeOfUser;
 	}
 
