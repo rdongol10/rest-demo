@@ -6,6 +6,13 @@
 	<body>
 	
 		<div class="container-fluid">
+			
+			<div class="row">
+				<div class="col-lg-2">
+					<button type="button" class="btn btn-primary" id="AddUser"> Add User</button>
+				</div>
+			</div>
+	
 			<div class="row">
 				<div class="col-lg-1">User id</div>
 				<div class="col-lg-1">First Name</div>
@@ -40,6 +47,15 @@
 			jQuery(".userInfo").on("click",".delete",function(){
 				var userId=jQuery(this).attr("userId");
 				deleteUser(userId)
+			});
+			
+			jQuery("#AddUser").on("click",function(){
+				window.location.href="/template/addUser.html"
+			})
+			
+			jQuery(".userInfo").on("click",".update",function(){
+				var userId=jQuery(this).attr("userId");
+				window.location.href="/template/addUser.html?id="+userId
 			});
 		});
 		

@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,13 +41,29 @@ public class UserController {
 		return ResponseEntity.ok(user.get());
 	}
 
+	@PostMapping
+	public ResponseEntity<User> create(User user) {
+		System.out.println(user.toString());
+		return ResponseEntity.ok(userService.save(user));
+	}
+
 	@PutMapping("/{id}")
-	public ResponseEntity<User> update(@PathVariable Long id, @Valid @RequestBody User user) {
+	public ResponseEntity<User> update(@PathVariable Long id, User user) {
 		if (!userService.findById(id).isPresent()) {
 			ResponseEntity.badRequest().build();
 		}
 
-		return ResponseEntity.ok(userService.save(user));
+		User currentUser = userService.findById(id).get();
+
+		currentUser.setFirstName(user.getFirstName());
+		currentUser.setMiddleName(user.getMiddleName());
+		currentUser.setLastName(user.getLastName());
+		currentUser.setPhoneNumber(user.getPhoneNumber());
+		currentUser.setEmailAddress(user.getEmailAddress());
+		currentUser.setSex(user.getSex());
+		currentUser.setTypeOfUser(user.getTypeOfUser());
+
+		return ResponseEntity.ok(userService.save(currentUser));
 	}
 
 	@DeleteMapping("/{id}")
